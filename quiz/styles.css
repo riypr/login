@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#quizBody ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.option {
+    padding: 10px;
+    background-color: #f4f4f4;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.option.active {
+    background-color: #d4d4d4;
+}
+
+#timer {
+    margin-top: 20px;
+}
+
+#adminPanel input {
+    display: block;
+    margin: 5px auto;
+}
