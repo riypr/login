@@ -1,14 +1,17 @@
 <?php
 if (isset($_POST['submit'])) {
     include "connection.php";
-    
+
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     $cpassword = trim($_POST['cpassword']);
-    
+
     // Check if username or email already exists
     $stmt = $conn->prepare("SELECT * FROM user WHERE username=? OR email=?");
+    if (!$stmt) {
+        die("Preparation failed: " . $conn->error);
+    }
     $stmt->bind_param("ss", $username, $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -18,11 +21,19 @@ if (isset($_POST['submit'])) {
         if ($password === $cpassword) {
             $hash = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $conn->prepare("INSERT INTO user (username, email, password) VALUES (?, ?, ?)");
+            if (!$stmt) {
+                die("Preparation failed: " . $conn->error);
+            }
             $stmt->bind_param("sss", $username, $email, $hash);
-            $stmt->execute();
-
-            header("Location: login.php");
-            exit();
+            if ($stmt->execute()) {
+                header("Location: login.php");
+                exit();
+            } else {
+                echo '<script>
+                alert("Failed to register. Please try again.");
+                window.location.href="signup.php";
+                </script>';
+            }
         } else {
             echo '<script>
             alert("Passwords do not match!");
@@ -37,6 +48,7 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
 <html>
 <head>
     <title>Register</title>
@@ -50,7 +62,7 @@ if (isset($_POST['submit'])) {
             <span class="subtitle">THANKS FOR CHOOSING US!</span>
         </div>
 
-        <form method="POST" action="login.php">
+        <form method="POST" action="signup.php">
             <div class="row grid">
                 <div class="row">
                     <label for="username">User Name</label>
@@ -78,4 +90,5 @@ if (isset($_POST['submit'])) {
     </div>
 </body>
 </html>
+
 

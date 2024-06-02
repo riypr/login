@@ -1,0 +1,95 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+:root{
+    --primarycolor: #ad91cf;
+    --secondarycolor: rgb(196,169,230);
+    --blackcolor: rgb(46,46,71);
+    --bordercolor: rgb(241, 241, 241);
+    --inputcolor: rgb(205, 237, 207);
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://img.freepik.com/free-vector/space-login-landing-page-template_23-2148260289.jpg?size=626&ext=jpg&ga=GA1.1.1369675164.1715731200&semt=ais_user');
+    background-position: center;
+    background-size: cover;
+}
+
+.form_container {
+    width: 500px;
+    height: 550px;
+    padding: 0 1rem;
+    border-radius: 8px;
+    border: 6px solid rgb(234,234,234);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    position: relative;
+    background: var(--primarycolor);
+    overflow: hidden;
+    z-index: 1;
+}
+
+.overlay{
+    position: absolute;
+    background: var(--secondarycolor);
+    content: '';
+    height: 600px;
+    width: 500px;
+    border-right: 50%;
+    z-index: 2;
+    top: -20%;
+    display: none;
+}
+
+.titlediv{
+    position: relative;
+    width: 100%;
+    margin: 10px auto 5px;
+    text-align: center;
+    transform: translateY(-2rem);
+    z-index: 1000;
+}
+
+.title{
+    color: var(--blackcolor);
+    font-weight: 600;
+    font-size: 2.5rem;
+}
+
+.row{
+    display: grid;
+    position: relative;
+    grid-gap: 1rem;
+    z-index: 10000;
+    transform: translateY(-0.5rem);
+    padding-bottom: -1rem;
+}
+
+#submitbtn{
+    background: var(--blackcolor);
+    border-radius: 6px;
+    cursor: pointer;
+    color: aliceblue;
+}
+#submitbtn:hover{
+    background: rgb(203,203,235);
+    color: var(--blackcolor);
+}

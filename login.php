@@ -1,31 +1,31 @@
 <?php
-if (isset($_POST['submit'])) {
+if(isset($_POST['submit'])){
     include "connection.php";
+    $username = mysqli_real_escape_string($conn , $_POST['username']);
+    $password = mysqli_real_escape_string($conn , $_POST['password']);     
 
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
-
-    $stmt = $conn->prepare("SELECT * FROM user WHERE username = ? OR email = ?");
-    $stmt->bind_param("ss", $username, $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-
-    if ($row) {
-        if (password_verify($password, $row["password"])) {
+    $sql = "SELECT * FROM user WHERE username = '$username' OR email='$username'";
+    $result = mysqli_query($conn , $sql);
+    $row = mysqli_fetch_array($result , MYSQLI_ASSOC);
+     
+    if($row){
+        if(password_verify($password , $row["password"])){
             header("Location: welcome.php");
-            exit();
+            exit(); // Ensure that no more output is sent to the browser
         }
-    } 
-
-    echo '<script>
-    alert("Invalid username or email");
-    window.location.href="login.php";
-    </script>';
+    } else {
+        echo '<script>
+        alert("Invalid username or email");
+        window.location.href="login.php";
+        </script>';
+    }
 }
 ?>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="login.css">
 </head>
@@ -57,5 +57,3 @@ if (isset($_POST['submit'])) {
     </div>
 </body>
 </html>
-
-
